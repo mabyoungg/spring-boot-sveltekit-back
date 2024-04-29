@@ -2,12 +2,12 @@ package org.example.springbootsveltekitback.domain.member.member.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.example.springbootsveltekitback.domain.member.member.entity.Member;
 import org.example.springbootsveltekitback.domain.member.member.service.MemberService;
-import org.example.springbootsveltekitback.global.exceptions.GlobalException;
+import org.example.springbootsveltekitback.global.rsData.RsData;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiV1MembersController {
     private final MemberService memberService;
 
+    @AllArgsConstructor
     @Getter
     public static class LoginResponseBody {
-        private String username;
-
-        public LoginResponseBody(String username) {
-            this.username = username;
-        }
+        @NotBlank
+        private String refreshToken;
+        @NotBlank
+        private String accessToken;
     }
 
     @Getter
@@ -38,16 +38,18 @@ public class ApiV1MembersController {
     }
 
     @PostMapping("/login")
-    public LoginResponseBody login(
+    public RsData<LoginResponseBody> login(
             @Valid @RequestBody LoginRequestBody body
     ) {
-        Member member = memberService.findByUsername(body.getUsername())
-                .orElseThrow(() -> new GlobalException("400-1", "해당 유저가 존재하지 않습니다."));
+        RsData<MemberService.AuthAndMakeTokensResponseBody> authAndMakeTokensRs = memberService.authAndMakeTokens(body.getUsername(), body.getPassword());
 
-        if (memberService.passwordMatches(member, body.getPassword()) == false) {
-            throw new GlobalException("400-2", "비밀번호가 일치하지 않습니다.");
-        }
-
-        return new LoginResponseBody(member.getUsername());
+        return RsData.of(
+                authAndMakeTokensRs.getResultCode(),
+                authAndMakeTokensRs.getMsg(),
+                new LoginResponseBody(
+                        authAndMakeTokensRs.getData().getRefreshToken(),
+                        authAndMakeTokensRs.getData().getAccessToken()
+                )
+        );
     }
 }

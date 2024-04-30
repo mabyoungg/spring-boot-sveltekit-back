@@ -26,13 +26,15 @@ public class MemberService {
     }
 
     @Transactional
-    public void join(String username, String password) {
+    public RsData<Member> join(String username, String password) {
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
                 .build();
 
         memberRepository.save(member);
+
+        return RsData.of("200-1", "회원가입 성공", member);
     }
 
     public boolean passwordMatches(Member member, String password) {

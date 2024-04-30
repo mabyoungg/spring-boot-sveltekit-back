@@ -110,7 +110,7 @@ public class Rq {
         if (isLogout()) return null;
 
         if (member == null) {
-            member = entityManager.find(Member.class, getUser().getId());
+            member = entityManager.getReference(Member.class, getUser().getId());
         }
 
         return member;

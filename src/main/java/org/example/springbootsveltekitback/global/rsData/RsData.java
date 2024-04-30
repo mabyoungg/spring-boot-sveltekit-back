@@ -31,4 +31,12 @@ public class RsData<T> {
                 .data(data)
                 .build();
     }
+
+    public boolean isSuccess() {
+        return statusCode >= 200 && statusCode < 400;
+    }
+
+    public boolean isFail() {
+        return !isSuccess();
+    }
 }

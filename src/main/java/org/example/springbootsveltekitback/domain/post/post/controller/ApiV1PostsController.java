@@ -8,7 +8,6 @@ import org.example.springbootsveltekitback.domain.post.post.entity.Post;
 import org.example.springbootsveltekitback.domain.post.post.service.PostService;
 import org.example.springbootsveltekitback.global.rq.Rq;
 import org.example.springbootsveltekitback.global.rsData.RsData;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +33,6 @@ public class ApiV1PostsController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/mine")
     public RsData<GetMineResponseBody> getMine() {
         Member member = rq.getMember();

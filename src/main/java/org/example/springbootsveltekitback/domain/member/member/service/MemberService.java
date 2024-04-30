@@ -7,10 +7,14 @@ import org.example.springbootsveltekitback.domain.member.member.entity.Member;
 import org.example.springbootsveltekitback.domain.member.member.repository.MemberRepository;
 import org.example.springbootsveltekitback.global.exceptions.GlobalException;
 import org.example.springbootsveltekitback.global.rsData.RsData;
+import org.example.springbootsveltekitback.global.security.SecurityUser;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -39,6 +43,21 @@ public class MemberService {
 
     public boolean passwordMatches(Member member, String password) {
         return passwordEncoder.matches(password, member.getPassword());
+    }
+
+    public SecurityUser getUserFromAccessToken(String accessToken) {
+        Map<String, Object> payloadBody = authTokenService.getDataFrom(accessToken);
+
+        long id = (int) payloadBody.get("id");
+        String username = (String) payloadBody.get("username");
+        List<String> authorities = (List<String>) payloadBody.get("authorities");
+
+        return new SecurityUser(
+                id,
+                username,
+                "",
+                authorities.stream().map(SimpleGrantedAuthority::new).toList()
+        );
     }
 
     @AllArgsConstructor

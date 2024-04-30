@@ -1,5 +1,6 @@
 package org.example.springbootsveltekitback.domain.post.post.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootsveltekitback.domain.member.member.entity.Member;
 import org.example.springbootsveltekitback.domain.post.post.dto.PostDto;
@@ -21,6 +22,7 @@ public class ApiV1PostsController {
     private final Rq rq;
     private final PostService postService;
 
+    @Getter
     public static class GetMineResponseBody {
         private final List<PostDto> items;
 

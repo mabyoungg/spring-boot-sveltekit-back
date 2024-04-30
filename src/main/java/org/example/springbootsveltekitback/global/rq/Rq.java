@@ -131,4 +131,8 @@ public class Rq {
                 .map(authentication -> (SecurityUser) authentication.getPrincipal())
                 .orElse(null);
     }
+
+    public void setLogin(SecurityUser securityUser) {
+        SecurityContextHolder.getContext().setAuthentication(securityUser.genAuthentication());
+    }
 }

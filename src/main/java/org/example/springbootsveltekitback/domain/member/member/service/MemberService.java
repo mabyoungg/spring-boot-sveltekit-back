@@ -1,5 +1,6 @@
 package org.example.springbootsveltekitback.domain.member.member.service;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootsveltekitback.domain.member.member.entity.Member;
@@ -38,15 +39,12 @@ public class MemberService {
         return passwordEncoder.matches(password, member.getPassword());
     }
 
+    @AllArgsConstructor
     @Getter
     public static class AuthAndMakeTokensResponseBody {
+        private Member member;
         private String accessToken;
         private String refreshToken;
-
-        public AuthAndMakeTokensResponseBody(String accessToken, String refreshToken) {
-            this.accessToken = accessToken;
-            this.refreshToken = refreshToken;
-        }
     }
 
     @Transactional
@@ -63,7 +61,7 @@ public class MemberService {
         return RsData.of(
                 "200-1",
                 "로그인 성공",
-                new AuthAndMakeTokensResponseBody(accessToken, refreshToken)
+                new AuthAndMakeTokensResponseBody(member, accessToken, refreshToken)
         );
     }
 }

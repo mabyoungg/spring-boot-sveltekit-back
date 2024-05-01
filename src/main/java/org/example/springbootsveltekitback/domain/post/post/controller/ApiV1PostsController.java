@@ -1,5 +1,7 @@
 package org.example.springbootsveltekitback.domain.post.post.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootsveltekitback.domain.member.member.entity.Member;
@@ -15,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping(value = "/api/v1/posts")
 @RequiredArgsConstructor
+@Tag(name = "ApiV1PostsController", description = "post 컨트롤러")
 public class ApiV1PostsController {
     private final Rq rq;
     private final PostService postService;
@@ -34,6 +37,7 @@ public class ApiV1PostsController {
     }
 
     @GetMapping("/mine")
+    @Operation(summary = "내 글 리스트")
     public RsData<GetMineResponseBody> getMine() {
         Member member = rq.getMember();
 

@@ -1,5 +1,7 @@
 package org.example.springbootsveltekitback.domain.member.member.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping("/api/v1/members")
+@RequestMapping(value = "/api/v1/members", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "ApiV1MembersController", description = "member 컨트롤러")
 public class ApiV1MembersController {
     private final MemberService memberService;
     private final Rq rq;
@@ -38,6 +43,7 @@ public class ApiV1MembersController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "로그인, 성공시 accessToken, refreshToken 쿠키 설정")
     public RsData<LoginResponseBody> login(
             @Valid @RequestBody LoginRequestBody body
     ) {

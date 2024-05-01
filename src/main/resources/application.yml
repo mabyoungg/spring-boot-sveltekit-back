@@ -13,13 +13,13 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:h2:mem:app_2024_04_28_dev;MODE=MySQL
+    url: jdbc:h2:./db_dev;MODE=MYSQL
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 100

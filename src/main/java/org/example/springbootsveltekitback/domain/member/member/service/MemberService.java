@@ -75,6 +75,10 @@ public class MemberService {
         );
     }
 
+    public long count() {
+        return memberRepository.count();
+    }
+
     @AllArgsConstructor
     @Getter
     public static class AuthAndMakeTokensResponseBody {

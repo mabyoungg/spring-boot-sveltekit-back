@@ -1,6 +1,7 @@
 package org.example.springbootsveltekitback.domain.post.post.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.ALL_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping(value = "/api/v1/posts")
+@RequestMapping(value = "/api/v1/posts", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Tag(name = "ApiV1PostsController", description = "post 컨트롤러")
 public class ApiV1PostsController {
@@ -36,8 +40,8 @@ public class ApiV1PostsController {
         }
     }
 
-    @GetMapping("/mine")
-    @Operation(summary = "내 글 리스트")
+    @GetMapping(value = "/mine", consumes = ALL_VALUE)
+    @Operation(summary = "내 글 리스트", security = @SecurityRequirement(name = "bearerAuth"))
     public RsData<GetMineResponseBody> getMine() {
         Member member = rq.getMember();
 

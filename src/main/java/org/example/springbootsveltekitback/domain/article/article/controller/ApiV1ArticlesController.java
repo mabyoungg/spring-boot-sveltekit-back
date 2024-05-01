@@ -1,6 +1,7 @@
 package org.example.springbootsveltekitback.domain.article.article.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootsveltekitback.domain.article.article.entity.Article;
@@ -14,9 +15,10 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/articles", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/articles", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Tag(name = "ApiV1ArticlesController", description = "article 컨트롤러")
+@SecurityRequirement(name = "bearerAuth")
 public class ApiV1ArticlesController {
     @GetMapping("")
     @Operation(summary = "게시물 리스트")

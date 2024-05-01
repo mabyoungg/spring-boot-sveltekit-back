@@ -21,9 +21,10 @@ import static org.springframework.http.MediaType.ALL_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/posts", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/posts", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Tag(name = "ApiV1PostsController", description = "post 컨트롤러")
+@SecurityRequirement(name = "bearerAuth")
 public class ApiV1PostsController {
     private final Rq rq;
     private final PostService postService;
@@ -41,7 +42,7 @@ public class ApiV1PostsController {
     }
 
     @GetMapping(value = "/mine", consumes = ALL_VALUE)
-    @Operation(summary = "내 글 리스트", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "내 글 리스트")
     public RsData<GetMineResponseBody> getMine() {
         Member member = rq.getMember();
 

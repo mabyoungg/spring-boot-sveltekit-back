@@ -82,4 +82,13 @@ public class ApiV1MembersController {
                 new MeResponseBody(rq.getMember())
         );
     }
+
+    @PostMapping(value = "/logout", consumes = ALL_VALUE)
+    @Operation(summary = "로그아웃")
+    public RsData<Void> logout() {
+        rq.removeCrossDomainCookie("accessToken");
+        rq.removeCrossDomainCookie("refreshToken");
+
+        return RsData.of("200", "로그아웃 성공");
+    }
 }

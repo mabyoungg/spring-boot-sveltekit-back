@@ -3,6 +3,7 @@ server:
 spring:
   profiles:
     include: secret
+    active: dev
   thymeleaf:
     cache: false
   h2:

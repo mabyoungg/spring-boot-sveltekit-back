@@ -5,9 +5,11 @@ import org.example.springbootsveltekitback.standard.util.Ut;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @RequiredArgsConstructor
+@Profile("dev")
 public class Dev {
     @Bean
     ApplicationRunner initDev() {

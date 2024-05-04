@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.springbootsveltekitback.standard.Empty;
 
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Builder(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PRIVATE)
 public class RsData<T> {
     private String resultCode;
@@ -18,7 +20,7 @@ public class RsData<T> {
     private T data;
 
     public static <T> RsData<T> of(String resultCode, String msg) {
-        return of(resultCode, msg, null);
+        return of(resultCode, msg, (T) new Empty());
     }
 
     public static <T> RsData<T> of(String resultCode, String msg, T data) {

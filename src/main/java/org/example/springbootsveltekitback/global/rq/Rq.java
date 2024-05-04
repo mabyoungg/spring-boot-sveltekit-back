@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootsveltekitback.domain.member.member.entity.Member;
+import org.example.springbootsveltekitback.global.exceptions.GlobalException;
 import org.example.springbootsveltekitback.global.security.SecurityUser;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -150,5 +151,15 @@ public class Rq {
 
     public String getHeader(String name) {
         return req.getHeader(name);
+    }
+
+    public String historyBack(GlobalException ex) {
+        req.setAttribute("failMsg", ex.getRsData().getMsg());
+
+        return "global/js";
+    }
+
+    public void setStatusCode(int statusCode) {
+        resp.setStatus(statusCode);
     }
 }

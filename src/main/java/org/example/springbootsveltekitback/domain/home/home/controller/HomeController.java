@@ -2,6 +2,7 @@ package org.example.springbootsveltekitback.domain.home.home.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.example.springbootsveltekitback.global.exceptions.GlobalException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,10 @@ public class HomeController {
     @ResponseBody
     @Operation(summary = "메인 페이지")
     public String showMain() {
+        if (true) {
+            throw new GlobalException("404-1", "존재하지 않는 페이지입니다.");
+        }
+
         return "홈";
     }
 }

@@ -106,16 +106,6 @@ public class Rq {
         cookie.setPath("/");
         cookie.setMaxAge(0);
         resp.addCookie(cookie);
-
-        ResponseCookie responseCookie = ResponseCookie.from(name, null)
-                .path("/")
-                .maxAge(0)
-                .sameSite("None")
-                .secure(true)
-                .httpOnly(true)
-                .build();
-
-        resp.addHeader("Set-Cookie", responseCookie.toString());
     }
 
     // 로그인 관련
